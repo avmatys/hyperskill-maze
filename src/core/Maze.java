@@ -1,6 +1,12 @@
 package maze.core;
 
-public class Maze implements Cloneable{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Maze implements Cloneable, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final CellType[][] grid;
     private final int rows;
@@ -92,5 +98,7 @@ public class Maze implements Cloneable{
         if (point == null) return;
         this.set(point.getRow(), point.getCol(), type);
     }
+
+
 
 }
