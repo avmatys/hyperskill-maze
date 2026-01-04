@@ -2,6 +2,9 @@ package maze.io;
 
 import maze.core.CellType;
 import maze.core.Maze;
+import maze.core.Point;
+
+import java.util.List;
 
 public class ConsoleMazeRenderer implements MazeRenderer {
 
@@ -14,6 +17,12 @@ public class ConsoleMazeRenderer implements MazeRenderer {
             System.out.println();
         }
     }
+
+    @Override
+    public void render(Maze maze, List<Point> path) {
+        throw new RuntimeException("Not implemented");
+    }
+
 
     private String symbolOf(CellType cell) {
         return switch (cell) {

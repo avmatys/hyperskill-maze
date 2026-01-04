@@ -11,6 +11,8 @@ public class Maze implements Cloneable, Serializable {
     private final CellType[][] grid;
     private final int rows;
     private final int cols;
+    private Point entrance;
+    private Point exit;
 
     public Maze(int rows, int cols) {
         this.rows = rows;
@@ -33,6 +35,11 @@ public class Maze implements Cloneable, Serializable {
                 this.grid[i][j] = copy.grid[i][j];
             }
         }
+    }
+
+    public CellType getCell(Point point) {
+        if (point == null) return CellType.NONE;
+        return this.getCell(point.getRow(), point.getCol());
     }
 
     public CellType getCell(int row, int col) {
@@ -99,6 +106,22 @@ public class Maze implements Cloneable, Serializable {
         this.set(point.getRow(), point.getCol(), type);
     }
 
+    public void setEntrance(Point point) {
+        if (!this.isOnBorder(point)) return;
+        this.entrance = point;
+    }
 
+    public void setExit(Point point) {
+        if (!this.isOnBorder(point)) return;
+        this.exit = point;
+    }
+
+    public Point getEntrance() {
+        return this.entrance;
+    }
+
+    public Point getExit() {
+        return this.exit;
+    }
 
 }

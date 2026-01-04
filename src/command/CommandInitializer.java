@@ -12,6 +12,7 @@ public class CommandInitializer {
         registry.register("2", new LoadMazeCommand(ctx, ctrl));
         registry.register("3", new SaveMazeCommand(ctx, ctrl));
         registry.register("4", new DisplayMazeCommand(ctx, ctrl));
+        registry.register("5", new SolveMazeCommand(ctx, ctrl));
         return registry;
     }
 

@@ -45,7 +45,7 @@ public class PrimMazeGenerator implements MazeGenerator {
             }
         }
         // Enhance the maze with enty and exit
-        if (!this.addEntranceAndExit()) {
+        if (!this.addEntranceAndExit(start)) {
             if (retryCount < MAX_RETRY) {
                 this.retryCount += 1;
                 this.generate(this.rows, this.cols);
@@ -79,15 +79,8 @@ public class PrimMazeGenerator implements MazeGenerator {
         return result;
     }
 
-    private boolean addEntranceAndExit() {
-        // Select any path point in the maze
-        Point start = null;
-        do {
-            int startRow = random.nextInt(rows / 2) * 2 + 1;
-            int startCol = random.nextInt(cols / 2) * 2 + 1;
-            start = new Point(startRow, startCol);
-        } while (!this.maze.isPath(start));
-        // Run the bfs to find possible entry and exit
+    private boolean addEntranceAndExit(Point start) {
+        // Run bfs to find entrance and exit
         Deque<Point> queue = new ArrayDeque<>();
         Set<Point> seen = new HashSet<>();
         List<Point> possibleEntrance = new ArrayList<>();
@@ -98,22 +91,19 @@ public class PrimMazeGenerator implements MazeGenerator {
                 continue;
             seen.add(current);
             for (int[] nei : NEIS) {
-                Point next = new Point(current.getRow() + nei[0],
-                        current.getCol() + nei[1]);
-                if (!this.maze.isInBounds(next)) continue;
-                if (this.maze.isPath(next)){
+                Point next = new Point(current.getRow() + nei[0], current.getCol() + nei[1]);
+                if (!this.maze.isInBounds(next)) 
+                    continue;
+                if (this.maze.isPath(next))
                     queue.add(next);
-                }
-                if (this.maze.isOnBorder(next)){
+                if (this.maze.isOnBorder(next))
                     possibleEntrance.add(next);
-                }
             }
         }
         // Select any 2 points on the border
         int m = possibleEntrance.size();
-        if (m < 2) {
+        if (m < 2) 
             return false;
-        }
         int first = this.random.nextInt(m);
         int second = first;
         int count = 0;
@@ -123,8 +113,12 @@ public class PrimMazeGenerator implements MazeGenerator {
             count++;
         }
         // Mark them as paths
-        this.maze.makePath(possibleEntrance.get(first));
-        this.maze.makePath(possibleEntrance.get(second));
+        Point entrance = possibleEntrance.get(first);
+        this.maze.makePath(entrance);
+        this.maze.setEntrance(entrance);
+        Point exit = possibleEntrance.get(second);
+        this.maze.makePath(exit);
+        this.maze.setExit(exit);
         return true;
     }
 

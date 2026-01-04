@@ -4,10 +4,14 @@ import maze.command.Command;
 import maze.command.CommandInitializer;
 import maze.command.CommandRegistry;
 import maze.core.Maze;
+import maze.core.Point;
+
+import java.util.List;
 
 public class GameController {
 
     private Maze maze;
+    private List<Point> path;
     private final GameContext ctx;
     private final CommandRegistry registry;
 
@@ -27,6 +31,10 @@ public class GameController {
     public Maze getMaze() {
         return this.maze;
     }
+
+    public void setPath(List<Point> path) { this.path = path; }
+
+    public List<Point> getPath() { return this.path; }
 
     public void play() {
         while (ctx.run) {
@@ -49,6 +57,7 @@ public class GameController {
         if (this.hasMaze()) {
             ctx.out.println("3. Save the maze");
             ctx.out.println("4. Display the maze");
+            ctx.out.println("5. Find the escape");
         }
         ctx.out.println("0. Exit");
     }

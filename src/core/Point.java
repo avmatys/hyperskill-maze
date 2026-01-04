@@ -1,8 +1,14 @@
 package maze.core;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Point {
+public class Point  implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final int row;
     private final int col;
 
